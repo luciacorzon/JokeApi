@@ -1,16 +1,23 @@
 package org.example;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+@Entity
 public class Chiste {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private int id;
     private boolean error;
+
+    @Enumerated(EnumType.STRING)
     private Categoria category;
     private Type type;
     private Map<Bandera, Boolean> flags;
     private boolean safe;
-    private int id;
     private String lang;
 
     public Chiste() {
