@@ -1,32 +1,48 @@
 package org.example;
 
-import java.util.Objects;
+public enum Categoria {
+    ANY("Any"),
+    MISC("Misc"),
+    PROGRAMMING("Programming"),
+    DARK("Dark"),
+    PUN("Pun"),
+    SPOOKY("Spooky"),
+    CHRISTMAS("Christmas");
 
-public class Categoria {
-    String categoryName;
+    private final String nombre;
 
-    public Categoria() {
+    Categoria(String nombre) {
+        this.nombre = nombre;
     }
 
-    public Categoria(String categoryName) {
-        this.categoryName = categoryName;
+    public String getNombre() {
+        return nombre;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Categoria categoria = (Categoria) o;
-        return Objects.equals(categoryName, categoria.categoryName);
+    /**
+     * Devuelve la categoría a partir de su nombre.
+     *
+     * @param nombre Nombre de la categoría
+     * @return Categoría
+     */
+    public static Categoria getCategoria(String nombre) {
+        for (Categoria c : Categoria.values()) {
+            if (c.getNombre().equals(nombre)) {
+                return c;
+            }
+        }
+        return null;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(categoryName);
-    }
-
+    /**
+     * Sobreescribe el método toString() para que devuelva el nombre de la categoría.
+     *
+     * @return Nombre de la categoría
+     * @see java.lang.Enum#toString()
+     */
     @Override
     public String toString() {
-        return categoryName;
+        return nombre;
     }
+
 }

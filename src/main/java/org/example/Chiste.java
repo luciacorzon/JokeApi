@@ -2,6 +2,7 @@ package org.example;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -11,82 +12,188 @@ public class Chiste {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
-    private boolean error;
 
     @Enumerated(EnumType.STRING)
-    private Categoria category;
-    private Type type;
-    private Map<Bandera, Boolean> flags;
-    private boolean safe;
-    private String lang;
+    private Categoria categoria;
+    private TipoChiste tipo;
+    private final List<Flag> banderas;
+    private String chiste;
+    private String respuesta;
 
-    public Chiste() {
-    }
+    private Lenguaje lenguaje;
 
-    public Chiste(boolean error, Categoria category, Type type, Map<Bandera, Boolean> flags, boolean safe, int id, String lang) {
-        this.error = error;
-        this.category = category;
-        this.type = type;
-        this.flags = flags;
-        this.safe = safe;
+    /**
+     * Constructor de la clase Chiste.
+     * @param id Identificador del chiste
+     * @param categoria Categoría del chiste
+     * @param idioma Idioma del chiste
+     * @param tipo Tipo del chiste
+     * @param chiste Chiste
+     * @param respuesta Respuesta del chiste
+     */
+    public Chiste(int id, Categoria categoria, String idioma, TipoChiste tipo, String chiste, String respuesta) {
         this.id = id;
-        this.lang = lang;
+        this.categoria = categoria;
+        this.tipo = tipo;
+        this.chiste = chiste;
+        this.respuesta = respuesta;
+        this.banderas = new ArrayList<>();
+        this.lenguaje = Lenguaje.getLenguaje(idioma);
     }
 
-    public boolean isError() {
-        return error;
+    /**
+     * Constructor por defecto de la clase Chiste.
+     *
+     */
+    public Chiste() {
+//        this.id = 0;
+        this.categoria = Categoria.ANY;
+        this.lenguaje = Lenguaje.EN;
+        this.tipo = TipoChiste.SINGLE;
+        this.chiste = "";
+        this.respuesta = "";
+        this.banderas = new ArrayList<>();
     }
 
-    public void setError(boolean error) {
-        this.error = error;
-    }
-
-    public Categoria getCategory() {
-        return category;
-    }
-
-    public void setCategory(Categoria category) {
-        this.category = category;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
-    public Map<Bandera, Boolean> getFlags() {
-        return flags;
-    }
-
-    public void setFlags(Map<Bandera, Boolean> flags) {
-        this.flags = flags;
-    }
-
-    public boolean isSafe() {
-        return safe;
-    }
-
-    public void setSafe(boolean safe) {
-        this.safe = safe;
-    }
-
+    /**
+     * Devuelve el identificador del chiste.
+     * @return Identificador del chiste
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Establece el identificador del chiste.
+     * @param id Identificador del chiste
+     */
     public void setId(int id) {
         this.id = id;
     }
 
-    public String getLang() {
-        return lang;
+    /**
+     * Devuelve la categoría del chiste.
+     * @return Categoría del chiste
+     */
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setLang(String lang) {
-        this.lang = lang;
+    public String getCategoriaString() {
+        return categoria.getNombre();
+    }
+
+    /**
+     * Establece la categoría del chiste.
+     * @param categoria Categoría del chiste
+     */
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = Categoria.getCategoria(categoria);
+    }
+
+    public Lenguaje getLenguaje() {
+        return lenguaje;
+    }
+
+    public String getLenguajeString() {
+        return lenguaje.getLenguaje();
+    }
+
+    public void setLenguaje(String lenguaje) {
+        this.lenguaje = Lenguaje.getLenguaje(lenguaje);
+    }
+
+    public void setLenguaje(Lenguaje lenguaje) {
+        this.lenguaje = lenguaje;
+    }
+
+    /**
+     * Devuelve el tipo del chiste.
+     * @return Tipo del chiste
+     */
+    public TipoChiste getTipo() {
+        return tipo;
+    }
+
+    public String getTipoString() {
+        return tipo.getNombre();
+    }
+
+    /**
+     * Establece el tipo del chiste.
+     * @param tipo Tipo del chiste
+     */
+    public void setTipo(TipoChiste tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = TipoChiste.getTipoChiste(tipo);
+    }
+
+    /**
+     * Devuelve las banderas del chiste.
+     * @return Banderas del chiste
+     */
+    public List<Flag> getBanderas() {
+        return banderas;
+    }
+
+    /**
+     * Añade una bandera al chiste.
+     * @param flag Bandera a añadir
+     */
+    public void addFlag(Flag flag) {
+        banderas.add(flag);
+    }
+
+    public boolean removeFlag(Flag bandera) {
+        return banderas.remove(bandera);
+    }
+
+    /**
+     * Si el chiste tiene esa bandera, devuelve true.
+     * @param bandera Bandera a comprobar
+     * @return  true si el chiste tiene esa bandera, false en caso contrario
+     */
+    public boolean containsFlag(Flag bandera) {
+        return banderas.contains(bandera);
+    }
+
+    /**
+     * Devuelve el chiste como cadena de caracteres.
+     * @return Chiste como String
+     */
+    public String getChiste() {
+        return chiste;
+    }
+
+    /**
+     * Establece el chiste.
+     * @param chiste Chiste
+     */
+    public void setChiste(String chiste) {
+        this.chiste = chiste;
+    }
+
+    /**
+     * Devuelve la respuesta del chiste.
+     * @return Respuesta del chiste
+     */
+    public String getRespuesta() {
+        return respuesta;
+    }
+
+    /**
+     * Establece la respuesta del chiste.
+     * @param respuesta Respuesta del chiste
+     */
+    public void setRespuesta(String respuesta) {
+        this.respuesta = respuesta;
     }
 
     @Override
@@ -102,19 +209,23 @@ public class Chiste {
         return Objects.hash(id);
     }
 
+    /**
+     * Sobrescritura del método toString() para que devuelva el chiste.
+     * Lo devuelve empleando un StringBuilder y por medio del método forEach() para recorrer la lista de banderas.
+     * @return Chiste como String
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Map.Entry<Bandera, Boolean> b: flags.entrySet()) {
-            sb.append(b).append(System.lineSeparator());
-        }
-        return "Chiste: " +
-                "\nerror: " + error +
-                "\ncategory: " + category +
-                "\ntype: " + type +
-                "\nflags: " + sb.toString() +
-                "\nsafe: " + safe +
-                "\nid: " + id +
-                "\nlang: " + lang;
+        sb.append("Chiste: ").append(chiste).append(System.lineSeparator());
+        sb.append("Respuesta: ").append(respuesta).append(System.lineSeparator());
+        sb.append("Categoría: ").append(categoria).append(System.lineSeparator());
+        sb.append("Idioma: ").append(lenguaje).append(System.lineSeparator());
+        sb.append("Tipo: ").append(tipo).append(System.lineSeparator());
+        sb.append("Banderas: ");
+        banderas.forEach(b -> sb.append(b).append(" "));
+        sb.append(System.lineSeparator());
+        return sb.toString();
     }
+
 }
