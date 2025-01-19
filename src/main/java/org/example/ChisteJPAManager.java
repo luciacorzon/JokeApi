@@ -38,6 +38,7 @@ public class ChisteJPAManager {
         return instancies.get(unidadPersistencia);
     }
 
+    // Devolve o entityManager asociado á unidade de persistencia
     public static EntityManager getEntityManager (String persistenceUnitName){
         return getEntityManagerFactory(persistenceUnitName).createEntityManager();
     }

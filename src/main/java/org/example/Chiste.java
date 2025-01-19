@@ -2,20 +2,23 @@ package org.example;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 @Entity
-public class Chiste {
+public class Chiste implements Serializable {
     @Id
+    @Column(name = "idChiste")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
-
-    @Enumerated(EnumType.STRING)
     private Categoria categoria;
     private TipoChiste tipo;
+    @ElementCollection
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "FlagsChiste", joinColumns = @JoinColumn(name = "idChiste"))
     private final List<Flag> banderas;
     private String chiste;
     private String respuesta;
