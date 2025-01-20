@@ -2,7 +2,7 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-    <persistence-unit name="jokeApiH2" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="chistesh2" transaction-type="RESOURCE_LOCAL">
         <description>
             Unidad de persistencia para el gestor de biblioteca
         </description>
@@ -10,11 +10,11 @@
         <class>org.example.Chiste</class>
         <class>org.example.Categoria</class>
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:h2:.\JokeApi;DATABASE_TO_UPPER=FALSE;FILE_LOCK=NO;DB_CLOSE_DELAY=-1"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:/home/sanclemente.local/a23luciacv/Documentos/JokeApi;DATABASE_TO_UPPER=FALSE;FILE_LOCK=NO;DB_CLOSE_DELAY=-1"/>
             <property name="javax.persistence.jdbc.user" value=""/>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
             <property name="javax.persistence.jdbc.password" value=""/>
-            <property name="jakarta.persistence.schema-generation.database.action" value="none" />
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create" />
 
             <property name="hibernate.dialect"    value="org.hibernate.dialect.H2Dialect" />
 

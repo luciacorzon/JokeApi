@@ -12,7 +12,8 @@ import java.util.Objects;
 public class Chiste implements Serializable {
     @Id
     @Column(name = "idChiste")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  //  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    // Non se indica o valor do id porque os chistes xa traen, e non fai falta autogeneralos
     private int id;
     private Categoria categoria;
     private TipoChiste tipo;
